@@ -3,1454 +3,1854 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ระบบเอกสาร อวท. วิทยาลัยเทคนิคจะนะ</title>
+
+<title>ระบบบริหารจัดการเอกสาร อวท. | วิทยาลัยเทคนิคจะนะ</title>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+    box-sizing:border-box;
+}
+
 body{
-  margin:0;
-  font-family:"Segoe UI","Tahoma",sans-serif;
-  background:#f5f7fb;
-  color:#202124;
+    margin:0;
+    font-family:"Noto Sans Thai","Segoe UI",Tahoma,sans-serif;
+    background:#f4f6f9;
+    color:#202633;
 }
+
+/* ================= HEADER ================= */
+
 .header{
-  height:70px;
-  background:#fff;
-  border-bottom:1px solid #e5e7eb;
-  display:flex;
-  align-items:center;
-  gap:18px;
-  padding:0 28px;
-  position:sticky;
-  top:0;
-  z-index:10;
+    height:82px;
+    background:#ffffff;
+    border-bottom:4px solid #c69a32;
+    display:flex;
+    align-items:center;
+    padding:0 35px;
+    gap:18px;
+    position:sticky;
+    top:0;
+    z-index:50;
 }
+
 .logo{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-size:19px;
-  font-weight:700;
-  color:#174a8b;
-  white-space:nowrap;
+    width:58px;
+    height:58px;
+    object-fit:contain;
 }
-.logo-icon{
-  width:42px;
-  height:42px;
-  background:#e9f2ff;
-  border-radius:12px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:22px;
+
+.header-title{
+    line-height:1.3;
 }
+
+.header-title-main{
+    font-size:20px;
+    font-weight:700;
+    color:#17365d;
+}
+
+.header-title-sub{
+    font-size:13px;
+    color:#666;
+    margin-top:3px;
+}
+
 .search{
-  flex:1;
-  max-width:650px;
-  border:0;
-  outline:0;
-  background:#f1f3f4;
-  border-radius:25px;
-  padding:13px 20px;
-  font-size:15px;
+    margin-left:auto;
+    width:330px;
+    padding:11px 16px;
+    border:1px solid #d8dde5;
+    border-radius:7px;
+    outline:none;
+    font-size:14px;
 }
-.layout{display:flex;min-height:calc(100vh - 70px)}
+
+.search:focus{
+    border-color:#17365d;
+}
+
+/* ================= LAYOUT ================= */
+
+.layout{
+    display:flex;
+    min-height:calc(100vh - 82px);
+}
+
 .sidebar{
-  width:250px;
-  background:#fff;
-  border-right:1px solid #e5e7eb;
-  padding:20px 14px;
+    width:255px;
+    background:#17365d;
+    color:white;
+    padding:22px 14px;
 }
+
+.sidebar-title{
+    font-size:12px;
+    color:#cbd5e1;
+    padding:12px 12px 8px;
+}
+
 .menu{
-  padding:12px 14px;
-  border-radius:10px;
-  cursor:pointer;
-  margin-bottom:5px;
-  font-size:14px;
+    padding:12px 14px;
+    border-radius:6px;
+    margin-bottom:4px;
+    cursor:pointer;
+    font-size:14px;
 }
-.menu:hover,.menu.active{
-  background:#eaf2ff;
-  color:#1558b0;
-  font-weight:600;
+
+.menu:hover,
+.menu.active{
+    background:#244d7c;
 }
-.menu-title{
-  color:#888;
-  font-size:12px;
-  padding:15px 14px 8px;
-}
+
 .main{
-  flex:1;
-  padding:30px;
-  max-width:1500px;
-  margin:auto;
+    flex:1;
+    padding:32px;
+    max-width:1500px;
+    margin:auto;
 }
+
+/* ================= TITLE ================= */
+
 .page-title{
-  font-size:27px;
-  margin:0 0 8px;
+    margin:0;
+    color:#17365d;
+    font-size:27px;
+    font-weight:700;
 }
-.description{
-  color:#777;
-  margin:0 0 25px;
+
+.page-subtitle{
+    margin-top:6px;
+    color:#6b7280;
+    font-size:14px;
 }
+
 .breadcrumb{
-  color:#777;
-  font-size:14px;
-  margin-bottom:20px;
+    font-size:13px;
+    color:#777;
+    margin-bottom:20px;
 }
+
 .breadcrumb span{
-  color:#1769e0;
-  cursor:pointer;
+    color:#17365d;
+    cursor:pointer;
 }
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
-  gap:18px;
+
+/* ================= DASHBOARD ================= */
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+    margin:25px 0;
 }
-.card{
-  background:#fff;
-  border:1px solid #e4e7ec;
-  border-radius:16px;
-  padding:22px;
-  cursor:pointer;
-  transition:.2s;
+
+.stat{
+    background:white;
+    border:1px solid #e0e4ea;
+    border-radius:8px;
+    padding:20px;
 }
-.card:hover{
-  transform:translateY(-2px);
-  box-shadow:0 6px 20px rgba(0,0,0,.08);
+
+.stat-label{
+    font-size:13px;
+    color:#6b7280;
 }
-.folder{
-  font-size:40px;
-  margin-bottom:12px;
+
+.stat-number{
+    margin-top:7px;
+    font-size:26px;
+    font-weight:700;
+    color:#17365d;
 }
-.card-title{
-  font-weight:700;
-  line-height:1.5;
+
+/* ================= SECTION ================= */
+
+.section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:25px 0 15px;
+    gap:15px;
 }
-.card-info{
-  color:#777;
-  font-size:13px;
-  margin-top:7px;
+
+.section-title{
+    font-size:18px;
+    font-weight:700;
+    color:#17365d;
 }
-.toolbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:15px;
-  margin-bottom:20px;
-  flex-wrap:wrap;
+
+/* ================= ORGANIZATION ================= */
+
+.org-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(270px,1fr));
+    gap:16px;
 }
+
+.org-card{
+    background:white;
+    border:1px solid #e0e4ea;
+    border-radius:8px;
+    padding:22px;
+    cursor:pointer;
+    transition:.15s;
+}
+
+.org-card:hover{
+    border-color:#b38b32;
+    box-shadow:0 4px 15px rgba(0,0,0,.07);
+}
+
+.org-icon{
+    width:45px;
+    height:45px;
+    border-radius:7px;
+    background:#eef3f8;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+    margin-bottom:14px;
+}
+
+.org-name{
+    font-weight:700;
+    color:#243b5a;
+    line-height:1.5;
+}
+
+.org-count{
+    color:#777;
+    font-size:13px;
+    margin-top:7px;
+}
+
+/* ================= BUTTON ================= */
+
 .btn{
-  border:0;
-  border-radius:10px;
-  padding:11px 18px;
-  cursor:pointer;
-  font-weight:600;
-  font-size:14px;
+    padding:10px 17px;
+    border-radius:6px;
+    border:0;
+    cursor:pointer;
+    font-size:13px;
+    font-weight:600;
 }
-.primary{
-  background:#1769e0;
-  color:#fff;
+
+.btn-primary{
+    background:#17365d;
+    color:white;
 }
-.primary:hover{background:#0e56be}
-.secondary{
-  background:#fff;
-  border:1px solid #ddd;
+
+.btn-primary:hover{
+    background:#102b4b;
 }
-.danger{
-  background:#fff0f0;
-  color:#c62828;
-  border:1px solid #ffcaca;
+
+.btn-secondary{
+    background:white;
+    color:#17365d;
+    border:1px solid #cfd5dd;
 }
+
+.btn-danger{
+    background:#fff1f1;
+    color:#b42318;
+    border:1px solid #f2c4c4;
+}
+
+/* ================= PROJECT ================= */
+
+.project{
+    background:white;
+    border:1px solid #e0e4ea;
+    border-radius:8px;
+    margin-bottom:15px;
+}
+
+.project-header{
+    padding:18px 20px;
+    border-bottom:1px solid #e9edf2;
+    display:flex;
+    justify-content:space-between;
+    gap:15px;
+}
+
+.project-name{
+    font-weight:700;
+    color:#17365d;
+    font-size:16px;
+}
+
+.project-date{
+    color:#777;
+    font-size:12px;
+    margin-top:5px;
+}
+
+.project-body{
+    padding:12px 20px 18px;
+}
+
+/* ================= DOCUMENT ================= */
+
 .document{
-  background:#fff;
-  border:1px solid #e3e7ed;
-  border-radius:15px;
-  padding:20px;
-  margin-bottom:14px;
+    border:1px solid #e1e5eb;
+    border-radius:7px;
+    padding:16px;
+    margin-top:10px;
+    background:#fafbfc;
 }
-.document-top{
-  display:flex;
-  justify-content:space-between;
-  gap:15px;
+
+.document-number{
+    color:#17365d;
+    font-size:17px;
+    font-weight:800;
 }
-.doc-number{
-  color:#1769e0;
-  font-weight:800;
-  font-size:18px;
+
+.document-type{
+    font-size:12px;
+    color:#6b7280;
+    margin-top:4px;
 }
-.doc-type{
-  font-size:13px;
-  color:#666;
-  margin-top:6px;
+
+.document-subject{
+    font-weight:700;
+    margin-top:8px;
 }
-.doc-title{
-  font-size:16px;
-  font-weight:700;
-  margin-top:10px;
+
+.document-meta{
+    font-size:12px;
+    color:#666;
+    margin-top:5px;
 }
-.doc-meta{
-  color:#777;
-  font-size:13px;
-  margin-top:7px;
-}
+
 .file-list{
-  margin-top:15px;
-  border-top:1px solid #eee;
-  padding-top:12px;
+    margin-top:12px;
+    padding-top:10px;
+    border-top:1px solid #e4e7eb;
 }
+
 .file{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  padding:8px;
-  border-radius:8px;
+    display:flex;
+    align-items:center;
+    gap:9px;
+    padding:7px;
+    font-size:13px;
 }
-.file:hover{background:#f5f7fa}
-.file-name{flex:1;font-size:14px}
-.badge{
-  background:#eaf2ff;
-  color:#1558b0;
-  border-radius:20px;
-  padding:6px 10px;
-  font-size:11px;
+
+.file:hover{
+    background:#eef3f8;
 }
-.actions{
-  display:flex;
-  gap:7px;
-  margin-top:15px;
-  flex-wrap:wrap;
+
+.file-name{
+    flex:1;
 }
-.empty{
-  text-align:center;
-  padding:70px 20px;
-  color:#777;
+
+.document-actions{
+    display:flex;
+    gap:7px;
+    margin-top:12px;
 }
-.empty-icon{font-size:50px;margin-bottom:10px}
+
+/* ================= MODAL ================= */
+
 .modal-bg{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.45);
-  z-index:100;
-  align-items:center;
-  justify-content:center;
-  padding:15px;
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.48);
+    z-index:100;
+    align-items:center;
+    justify-content:center;
+    padding:15px;
 }
+
 .modal{
-  width:min(720px,100%);
-  max-height:90vh;
-  overflow:auto;
-  background:#fff;
-  border-radius:18px;
-  padding:25px;
+    width:min(720px,100%);
+    max-height:90vh;
+    overflow:auto;
+    background:white;
+    border-radius:10px;
+    padding:25px;
 }
-.modal h2{margin-top:0}
+
+.modal-title{
+    color:#17365d;
+    margin:0 0 20px;
+}
+
 .form-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:15px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
 }
-.field{margin-bottom:5px}
-.field.full{grid-column:1/-1}
+
+.field.full{
+    grid-column:1/-1;
+}
+
 .field label{
-  display:block;
-  font-size:13px;
-  font-weight:700;
-  margin-bottom:7px;
+    display:block;
+    font-size:13px;
+    font-weight:700;
+    margin-bottom:6px;
 }
+
 .field input,
 .field select,
 .field textarea{
-  width:100%;
-  border:1px solid #d8dce3;
-  border-radius:9px;
-  padding:11px;
-  font:inherit;
-  outline:none;
+    width:100%;
+    border:1px solid #d5dae2;
+    border-radius:6px;
+    padding:10px;
+    font:inherit;
+    outline:none;
 }
-.field textarea{min-height:80px;resize:vertical}
-.file-input{
-  background:#f7f8fa;
-  padding:12px;
-  border-radius:9px;
+
+.field textarea{
+    min-height:80px;
 }
+
 .modal-actions{
-  display:flex;
-  justify-content:flex-end;
-  gap:10px;
-  margin-top:20px;
+    display:flex;
+    justify-content:flex-end;
+    gap:8px;
+    margin-top:20px;
 }
+
 .hint{
-  font-size:12px;
-  color:#777;
-  margin-top:5px;
+    color:#777;
+    font-size:11px;
+    margin-top:4px;
 }
-.stat{
-  background:#fff;
-  border:1px solid #e5e7eb;
-  border-radius:15px;
-  padding:20px;
+
+/* ================= EMPTY ================= */
+
+.empty{
+    background:white;
+    border:1px dashed #ccd2da;
+    padding:60px 20px;
+    text-align:center;
+    color:#777;
 }
-.stat-number{
-  font-size:28px;
-  font-weight:800;
-  color:#1769e0;
-}
-.stats{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:15px;
-  margin-bottom:25px;
-}
+
+/* ================= MOBILE ================= */
+
 @media(max-width:800px){
-  .sidebar{display:none}
-  .header{padding:0 14px}
-  .logo-text{display:none}
-  .main{padding:20px 14px}
-  .form-grid{grid-template-columns:1fr}
-  .field.full{grid-column:auto}
+
+    .header{
+        padding:0 15px;
+    }
+
+    .logo{
+        width:48px;
+        height:48px;
+    }
+
+    .header-title-main{
+        font-size:15px;
+    }
+
+    .header-title-sub{
+        font-size:10px;
+    }
+
+    .search{
+        display:none;
+    }
+
+    .sidebar{
+        display:none;
+    }
+
+    .main{
+        padding:20px 14px;
+    }
+
+    .stats{
+        grid-template-columns:1fr;
+    }
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .field.full{
+        grid-column:auto;
+    }
+
 }
+
 </style>
 </head>
 
+
 <body>
 
-<header class="header">
-  <div class="logo">
-    <div class="logo-icon">📁</div>
-    <div class="logo-text">ระบบเอกสาร อวท.</div>
-  </div>
 
-  <input
-    id="search"
-    class="search"
-    placeholder="🔍 ค้นหาเลขเอกสาร โครงการ เรื่อง หรือไฟล์..."
-    oninput="searchDocuments()"
-  >
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <img
+        src="logo-aft.png"
+        class="logo"
+        alt="โลโก้ อวท."
+    >
+
+    <div class="header-title">
+
+        <div class="header-title-main">
+            ระบบบริหารจัดการเอกสาร อวท.
+        </div>
+
+        <div class="header-title-sub">
+            องค์การนักวิชาชีพในอนาคตแห่งประเทศไทย
+            · วิทยาลัยเทคนิคจะนะ
+        </div>
+
+    </div>
+
+    <input
+        id="search"
+        class="search"
+        placeholder="ค้นหาเลขเอกสาร โครงการ หรือเรื่อง..."
+        oninput="searchDocuments()"
+    >
+
 </header>
+
 
 <div class="layout">
 
+
+<!-- ================= SIDEBAR ================= -->
+
 <aside class="sidebar">
 
-  <div class="menu active" onclick="home()">🏠 หน้าแรก</div>
-  <div class="menu" onclick="showAllDocuments()">📄 เอกสารทั้งหมด</div>
+    <div
+        class="menu active"
+        onclick="showHome()"
+    >
+        หน้าแรก
+    </div>
 
-  <div class="menu-title">หน่วยงาน</div>
+    <div
+        class="menu"
+        onclick="showAllDocuments()"
+    >
+        ทะเบียนเอกสาร
+    </div>
 
-  <div id="sidebarOrg"></div>
+    <div class="menu-title">
+        หน่วยงาน
+    </div>
+
+    <div id="sidebarOrganizations"></div>
 
 </aside>
 
+
+<!-- ================= MAIN ================= -->
+
 <main class="main">
-  <div id="content"></div>
+
+    <div id="content"></div>
+
 </main>
 
 </div>
 
 
-<!-- MODAL -->
-<div class="modal-bg" id="modal">
+<!-- ================= MODAL ================= -->
+
+<div
+    class="modal-bg"
+    id="modal"
+>
 
 <div class="modal">
 
-<h2 id="modalTitle">➕ เพิ่มเอกสาร</h2>
+    <h2
+        class="modal-title"
+        id="modalTitle"
+    >
+        ลงทะเบียนเอกสาร
+    </h2>
 
-<div class="form-grid">
+    <div class="form-grid">
 
-<div class="field">
-<label>วันที่เอกสาร *</label>
-<input
- id="docDate"
- type="text"
- maxlength="10"
- placeholder="วว/ดด/2569"
- oninput="formatThaiDate(this)"
->
-<div class="hint">ตัวอย่าง 29/09/2569</div>
+        <div class="field">
+
+            <label>
+                วันที่เอกสาร *
+            </label>
+
+            <input
+                id="docDate"
+                placeholder="วว/ดด/2569"
+                maxlength="10"
+                oninput="formatThaiDate(this)"
+            >
+
+            <div class="hint">
+                ตัวอย่าง 29/09/2569
+            </div>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                ประเภทบันทึกข้อความ *
+            </label>
+
+            <select id="docType">
+
+                <option value="">
+                    -- เลือกประเภท --
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                หน่วยงาน *
+            </label>
+
+            <select id="docOrg">
+
+                <option value="">
+                    -- เลือกหน่วยงาน --
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                โครงการ *
+            </label>
+
+            <input
+                id="docProject"
+                placeholder="ชื่อโครงการ"
+            >
+
+        </div>
+
+
+        <div class="field full">
+
+            <label>
+                ชื่อเรื่อง *
+            </label>
+
+            <input
+                id="docSubject"
+                placeholder="ชื่อเรื่องของบันทึกข้อความ"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                ผู้ลงทะเบียน
+            </label>
+
+            <input
+                id="docPerson"
+                placeholder="ชื่อผู้ลงทะเบียน"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                ไฟล์เอกสาร
+            </label>
+
+            <input
+                id="docFiles"
+                type="file"
+                multiple
+            >
+
+        </div>
+
+
+        <div class="field full">
+
+            <label>
+                หมายเหตุ
+            </label>
+
+            <textarea
+                id="docNote"
+                placeholder="หมายเหตุเพิ่มเติม"
+            ></textarea>
+
+        </div>
+
+    </div>
+
+
+    <div class="modal-actions">
+
+        <button
+            class="btn btn-secondary"
+            onclick="closeModal()"
+        >
+            ยกเลิก
+        </button>
+
+        <button
+            class="btn btn-primary"
+            id="saveButton"
+            onclick="saveDocument()"
+        >
+            บันทึกข้อมูล
+        </button>
+
+    </div>
+
 </div>
 
-<div class="field">
-<label>ประเภทบันทึกข้อความ *</label>
-<select id="docType">
-<option value="">-- เลือกประเภท --</option>
-</select>
-</div>
-
-<div class="field">
-<label>หน่วยงาน / ชมรม *</label>
-<select id="docOrg">
-<option value="">-- เลือกหน่วยงาน --</option>
-</select>
-</div>
-
-<div class="field">
-<label>ชื่อโครงการ *</label>
-<input id="docProject" placeholder="ชื่อโครงการ">
-</div>
-
-<div class="field full">
-<label>ชื่อเรื่อง *</label>
-<input id="docSubject" placeholder="ชื่อเรื่องของบันทึกข้อความ">
-</div>
-
-<div class="field">
-<label>ผู้ลงทะเบียน</label>
-<input id="docPerson" placeholder="ชื่อผู้ลงทะเบียน">
-</div>
-
-<div class="field">
-<label>ไฟล์เอกสาร</label>
-<input
- id="docFiles"
- class="file-input"
- type="file"
- multiple
->
-</div>
-
-<div class="field full">
-<label>หมายเหตุ</label>
-<textarea id="docNote" placeholder="หมายเหตุเพิ่มเติม"></textarea>
-</div>
-
-</div>
-
-<div class="modal-actions">
-<button class="btn secondary" onclick="closeModal()">ยกเลิก</button>
-<button class="btn primary" onclick="saveDocument()">บันทึกเอกสาร</button>
-</div>
-
-</div>
 </div>
 
 
 <script>
 
-/* =========================
-   ประเภทบันทึกข้อความ 19 รายการ
-========================= */
 
-const types = [
+/* =====================================================
+   ประเภทบันทึกข้อความ
+===================================================== */
+
+const documentTypes = [
+
 "บันทึกข้อความขออนุมัติโครงการ",
+
 "บันทึกข้อความขออนุญาตดำเนินโครงการ",
+
 "บันทึกข้อความขออนุญาตประชุม",
+
 "บันทึกข้อความขอเชิญประชุม",
+
 "บันทึกข้อความรายงานผลการประชุม",
+
 "บันทึกขออนุญาตลงนามในคำสั่งวิทยาลัยฯ โครงการ",
+
 "บันทึกขออนุญาตลงนามในประกาศ อวท. โครงการ",
+
 "บันทึกข้อความขออนุญาตประชาสัมพันธ์",
+
 "บันทึกข้อความขออนุญาตใช้สถานที่",
+
 "บันทึกข้อความเชิญวิทยากร",
+
 "บันทึกข้อความขอเวลาเรียน",
+
 "บันทึกข้อความสรุปงบประมาณการดำเนินโครงการ",
+
 "บันทึกข้อความรายงานสรุปจำนวนผู้เข้าร่วมโครงการ",
+
 "บันทึกข้อความรายงานผลการดำเนินโครงการ",
+
 "บันทึกข้อความรายงานสรุปผลการดำเนินงานตามโครงการ",
+
 "บันทึกข้อความขออนุญาตเปลี่ยนสถานที่จัดโครงการ",
+
 "บันทึกข้อความขออนุญาตลงนามในเกียรติบัตร",
+
 "บันทึกข้อความขอเชิญเป็นประธานเปิดโครงการ",
+
 "บันทึกข้อความขออนุญาตผู้บังคับบัญชาพานักเรียนออกนอกสถานที่"
+
 ];
 
 
-/* =========================
+/* =====================================================
    หน่วยงาน
-========================= */
+===================================================== */
 
 const organizations = [
 
 {
- id:"aft",
- name:"องค์การนักวิชาชีพในอนาคตแห่งประเทศไทย",
- icon:"🏛️"
+    id:"aft",
+    name:"องค์การนักวิชาชีพในอนาคตแห่งประเทศไทย",
+    icon:"อวท."
 },
 
 {
- id:"electric",
- name:"ชมรมวิชาชีพช่างไฟฟ้ากำลัง",
- icon:"⚡"
+    id:"electric",
+    name:"ชมรมวิชาชีพช่างไฟฟ้ากำลัง",
+    icon:"ฟฟ."
 },
 
 {
- id:"auto",
- name:"ชมรมวิชาชีพช่างยนต์",
- icon:"🔧"
+    id:"auto",
+    name:"ชมรมวิชาชีพช่างยนต์",
+    icon:"ยน."
 },
 
 {
- id:"electronic",
- name:"ชมรมวิชาชีพช่างอิเล็กทรอนิกส์",
- icon:"🔌"
+    id:"electronic",
+    name:"ชมรมวิชาชีพช่างอิเล็กทรอนิกส์",
+    icon:"อท."
 },
 
 {
- id:"construction",
- name:"ชมรมวิชาชีพก่อสร้าง",
- icon:"🏗️"
+    id:"construction",
+    name:"ชมรมวิชาชีพก่อสร้าง",
+    icon:"กส."
 },
 
 {
- id:"welding",
- name:"ชมรมวิชาชีพช่างเชื่อมโลหะ",
- icon:"🔥"
+    id:"welding",
+    name:"ชมรมวิชาชีพช่างเชื่อมโลหะ",
+    icon:"ชม."
 },
 
 {
- id:"accounting",
- name:"ชมรมวิชาชีพการบัญชี",
- icon:"📊"
+    id:"accounting",
+    name:"ชมรมวิชาชีพการบัญชี",
+    icon:"บช."
 },
 
 {
- id:"digital",
- name:"ชมรมวิชาชีพเทคโนโลยีธุรกิจดิจิทัล",
- icon:"💻"
+    id:"digital",
+    name:"ชมรมวิชาชีพเทคโนโลยีธุรกิจดิจิทัล",
+    icon:"ดท."
 },
 
 {
- id:"sadao",
- name:"ชมรมวิชาชีพศูนย์ฝึกอบรมวิชาชีพอำเภอสะเดา",
- icon:"🏫"
+    id:"sadao",
+    name:"ชมรมวิชาชีพศูนย์ฝึกอบรมวิชาชีพอำเภอสะเดา",
+    icon:"ศฝ."
 }
 
 ];
 
 
-/* =========================
-   ข้อมูลเอกสาร
-========================= */
-
-let documents = [];
-
-
-/*
-  ลำดับเริ่มต้น
-  อวท.215/2569
-*/
+/* =====================================================
+   เริ่มเลขทะเบียน
+===================================================== */
 
 const START_NUMBER = 215;
 
 
-/* =========================
-   LocalStorage
-========================= */
+/* =====================================================
+   ข้อมูล
+===================================================== */
 
-const STORAGE_KEY = "aft_chana_documents_v1";
+let documents = [];
+
+let editingId = null;
+
+const STORAGE_KEY =
+    "aft_chana_document_system_v2";
+
+
+/* =====================================================
+   โหลดข้อมูล
+===================================================== */
 
 function loadData(){
 
-  try{
-    const saved=localStorage.getItem(STORAGE_KEY);
+    const saved =
+        localStorage.getItem(STORAGE_KEY);
 
     if(saved){
-      documents=JSON.parse(saved);
+
+        try{
+
+            documents =
+                JSON.parse(saved);
+
+        }catch(e){
+
+            documents = [];
+
+        }
+
     }
 
-  }catch(e){
-    documents=[];
-  }
-
 }
+
 
 function saveData(){
 
-  localStorage.setItem(
-    STORAGE_KEY,
-    JSON.stringify(documents)
-  );
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(documents)
+    );
 
 }
 
 
-/* =========================
+/* =====================================================
    วันที่ไทย
-========================= */
+===================================================== */
 
 function formatThaiDate(input){
 
-  let v=input.value.replace(/\D/g,"");
+    let value =
+        input.value.replace(/\D/g,"");
 
-  if(v.length>8) v=v.slice(0,8);
+    if(value.length > 8)
+        value = value.substring(0,8);
 
-  if(v.length>=5){
-    input.value=
-      v.slice(0,2)+"/"+
-      v.slice(2,4)+"/"+
-      v.slice(4);
-  }
-  else if(v.length>=3){
-    input.value=
-      v.slice(0,2)+"/"+
-      v.slice(2);
-  }
-  else{
-    input.value=v;
-  }
+    if(value.length >= 5){
 
-}
+        input.value =
+            value.substring(0,2)+"/"+
+            value.substring(2,4)+"/"+
+            value.substring(4);
 
+    }else if(value.length >= 3){
 
-function thaiToISO(date){
+        input.value =
+            value.substring(0,2)+"/"+
+            value.substring(2);
 
-  const m=date.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+    }else{
 
-  if(!m) return null;
+        input.value=value;
 
-  const d=parseInt(m[1]);
-  const month=parseInt(m[2]);
-  const year=parseInt(m[3])-543;
-
-  const test=new Date(year,month-1,d);
-
-  if(
-    test.getFullYear()!==year ||
-    test.getMonth()!==month-1 ||
-    test.getDate()!==d
-  ){
-    return null;
-  }
-
-  return (
-    year.toString().padStart(4,"0")+
-    "-"+
-    month.toString().padStart(2,"0")+
-    "-"+
-    d.toString().padStart(2,"0")
-  );
+    }
 
 }
 
 
-function isoToThai(date){
+function thaiToISO(value){
 
-  if(!date)return "-";
+    const match =
+        value.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
 
-  const p=date.split("-");
+    if(!match)
+        return null;
 
-  return `${p[2]}/${p[1]}/${parseInt(p[0])+543}`;
+    const day =
+        parseInt(match[1]);
+
+    const month =
+        parseInt(match[2]);
+
+    const year =
+        parseInt(match[3])-543;
+
+    const date =
+        new Date(year,month-1,day);
+
+    if(
+        date.getFullYear()!==year ||
+        date.getMonth()!==month-1 ||
+        date.getDate()!==day
+    ){
+
+        return null;
+
+    }
+
+    return (
+        year.toString().padStart(4,"0")+
+        "-"+
+        month.toString().padStart(2,"0")+
+        "-"+
+        day.toString().padStart(2,"0")
+    );
 
 }
 
 
-/* =========================
-   ลำดับเลขเอกสาร
-========================= */
+function isoToThai(value){
+
+    if(!value)
+        return "-";
+
+    const p =
+        value.split("-");
+
+    return (
+        p[2]+"/"+
+        p[1]+"/"+
+        (parseInt(p[0])+543)
+    );
+
+}
+
+
+/* =====================================================
+   เรียงเลขเอกสาร
+===================================================== */
 
 function numberedDocuments(){
 
-  return [...documents].sort((a,b)=>{
+    return [...documents].sort((a,b)=>{
 
-    const dateCompare=
-      a.isoDate.localeCompare(b.isoDate);
+        const date =
+            a.isoDate.localeCompare(b.isoDate);
 
-    if(dateCompare!==0){
-      return dateCompare;
-    }
+        if(date!==0)
+            return date;
 
-    return a.seq-b.seq;
+        return a.sequence-b.sequence;
 
-  });
+    });
 
 }
 
 
 function getNumber(doc){
 
-  const list=numberedDocuments();
+    const list =
+        numberedDocuments();
 
-  const index=
-    list.findIndex(x=>x.id===doc.id);
+    const index =
+        list.findIndex(
+            x=>x.id===doc.id
+        );
 
-  return START_NUMBER+index;
+    return START_NUMBER + index;
 
 }
 
 
 function documentNumber(doc){
 
-  return `อวท.${getNumber(doc)}/2569`;
+    return `อวท.${getNumber(doc)}/2569`;
 
 }
 
 
-/* =========================
-   Escape HTML
-========================= */
+/* =====================================================
+   HTML Escape
+===================================================== */
 
-function esc(value){
+function escapeHTML(value){
 
-  return String(value||"")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-
-}
-
-
-/* =========================
-   เตรียม Dropdown
-========================= */
-
-function setupSelects(){
-
-  const type=
-    document.getElementById("docType");
-
-  types.forEach(t=>{
-
-    type.innerHTML+=
-      `<option value="${esc(t)}">${esc(t)}</option>`;
-
-  });
-
-
-  const org=
-    document.getElementById("docOrg");
-
-  organizations.forEach(o=>{
-
-    org.innerHTML+=
-      `<option value="${o.id}">${esc(o.name)}</option>`;
-
-  });
-
-
-  const sidebar=
-    document.getElementById("sidebarOrg");
-
-  organizations.forEach(o=>{
-
-    sidebar.innerHTML+=`
-
-      <div
-        class="menu"
-        onclick="openOrganization('${o.id}')">
-
-        ${o.icon} ${esc(o.name)}
-
-      </div>
-
-    `;
-
-  });
+    return String(value||"")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
 
 }
 
 
-/* =========================
-   หน้าแรก
-========================= */
+/* =====================================================
+   เตรียมระบบ
+===================================================== */
 
-function home(){
+function setup(){
 
-  document.getElementById("search").value="";
+    const type =
+        document.getElementById("docType");
 
-  const total=documents.length;
+    documentTypes.forEach(item=>{
 
-  const latest=
-    numberedDocuments().length
-    ? documentNumber(
-        numberedDocuments()[numberedDocuments().length-1]
-      )
-    : "-";
+        const option =
+            document.createElement("option");
 
+        option.value=item;
+        option.textContent=item;
 
-  document.getElementById("content").innerHTML=`
-
-    <h1 class="page-title">
-      📁 ระบบเอกสาร อวท.
-    </h1>
-
-    <p class="description">
-      ระบบทะเบียนเลขเอกสารและคลังเอกสาร
-      องค์การนักวิชาชีพในอนาคตแห่งประเทศไทย
-      วิทยาลัยเทคนิคจะนะ
-    </p>
-
-    <div class="stats">
-
-      <div class="stat">
-        <div>เอกสารทั้งหมด</div>
-        <div class="stat-number">${total}</div>
-      </div>
-
-      <div class="stat">
-        <div>เลขเอกสารล่าสุด</div>
-        <div class="stat-number" style="font-size:20px">
-          ${latest}
-        </div>
-      </div>
-
-      <div class="stat">
-        <div>เลขเริ่มต้น</div>
-        <div class="stat-number">
-          ${START_NUMBER}
-        </div>
-      </div>
-
-    </div>
-
-    <div class="toolbar">
-
-      <div>
-        <h2>หน่วยงาน</h2>
-      </div>
-
-      <button
-        class="btn primary"
-        onclick="openAddDocument()">
-
-        ＋ ลงทะเบียนเอกสาร
-
-      </button>
-
-    </div>
-
-    <div class="grid" id="orgGrid"></div>
-
-  `;
-
-
-  const grid=
-    document.getElementById("orgGrid");
-
-
-  organizations.forEach(org=>{
-
-    const count=
-      documents.filter(d=>d.org===org.id).length;
-
-
-    grid.innerHTML+=`
-
-      <div
-        class="card"
-        onclick="openOrganization('${org.id}')">
-
-        <div class="folder">
-          ${org.icon}
-        </div>
-
-        <div class="card-title">
-          ${esc(org.name)}
-        </div>
-
-        <div class="card-info">
-          📄 ${count} เอกสาร
-        </div>
-
-      </div>
-
-    `;
-
-  });
-
-}
-
-
-/* =========================
-   เปิดหน่วยงาน
-========================= */
-
-function openOrganization(id){
-
-  const org=
-    organizations.find(x=>x.id===id);
-
-  if(!org)return;
-
-
-  const list=
-    numberedDocuments()
-      .filter(d=>d.org===id);
-
-
-  document.getElementById("content").innerHTML=`
-
-    <div class="breadcrumb">
-      <span onclick="home()">หน้าแรก</span>
-      /
-      ${esc(org.name)}
-    </div>
-
-    <div class="toolbar">
-
-      <div>
-
-        <h1 class="page-title">
-          ${org.icon} ${esc(org.name)}
-        </h1>
-
-        <p class="description">
-          ${list.length} เอกสาร
-        </p>
-
-      </div>
-
-      <button
-        class="btn primary"
-        onclick="openAddDocument('${id}')">
-
-        ＋ ลงทะเบียนเอกสาร
-
-      </button>
-
-    </div>
-
-    <div id="documentList"></div>
-
-  `;
-
-
-  renderDocumentList(list);
-
-}
-
-
-/* =========================
-   แสดงเอกสาร
-========================= */
-
-function renderDocumentList(list){
-
-  const box=
-    document.getElementById("documentList");
-
-  if(!list.length){
-
-    box.innerHTML=`
-
-      <div class="empty">
-
-        <div class="empty-icon">📂</div>
-
-        <h3>ยังไม่มีเอกสาร</h3>
-
-        <p>กด “ลงทะเบียนเอกสาร” เพื่อเพิ่มรายการแรก</p>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  box.innerHTML="";
-
-  list.forEach(doc=>{
-
-    box.innerHTML+=documentHTML(doc);
-
-  });
-
-}
-
-
-function documentHTML(doc){
-
-  const org=
-    organizations.find(o=>o.id===doc.org);
-
-
-  let filesHTML="";
-
-
-  if(doc.files && doc.files.length){
-
-    doc.files.forEach(file=>{
-
-      filesHTML+=`
-
-        <div class="file">
-
-          <div>📄</div>
-
-          <div class="file-name">
-            ${esc(file.name)}
-          </div>
-
-          <div class="badge">
-            ไฟล์
-          </div>
-
-        </div>
-
-      `;
+        type.appendChild(option);
 
     });
 
-  }
-  else{
 
-    filesHTML=
-      `<div class="hint">ยังไม่มีไฟล์แนบ</div>`;
+    const org =
+        document.getElementById("docOrg");
 
-  }
+    organizations.forEach(item=>{
+
+        const option =
+            document.createElement("option");
+
+        option.value=item.id;
+        option.textContent=item.name;
+
+        org.appendChild(option);
+
+    });
 
 
-  return `
+    const sidebar =
+        document.getElementById(
+            "sidebarOrganizations"
+        );
 
-    <div class="document">
+    organizations.forEach(item=>{
 
-      <div class="document-top">
+        sidebar.innerHTML += `
+
+            <div
+                class="menu"
+                onclick="openOrganization('${item.id}')"
+            >
+
+                ${item.icon}
+                ${escapeHTML(item.name)}
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+/* =====================================================
+   หน้าแรก
+===================================================== */
+
+function showHome(){
+
+    document.getElementById("search").value="";
+
+    const total =
+        documents.length;
+
+    const last =
+        numberedDocuments();
+
+    const latest =
+        last.length
+        ? documentNumber(last[last.length-1])
+        : "-";
+
+
+    document.getElementById("content").innerHTML=`
 
         <div>
 
-          <div class="doc-number">
-            ${documentNumber(doc)}
-          </div>
+            <h1 class="page-title">
+                ระบบบริหารจัดการเอกสาร อวท.
+            </h1>
 
-          <div class="doc-type">
-            ${esc(doc.type)}
-          </div>
-
-          <div class="doc-title">
-            ${esc(doc.subject)}
-          </div>
-
-          <div class="doc-meta">
-            📅 ${isoToThai(doc.isoDate)}
-            &nbsp; • &nbsp;
-            🏢 ${esc(org ? org.name : "-")}
-          </div>
-
-          <div class="doc-meta">
-            📁 โครงการ: ${esc(doc.project)}
-          </div>
-
-          ${
-            doc.person
-            ? `<div class="doc-meta">👤 ${esc(doc.person)}</div>`
-            : ""
-          }
+            <div class="page-subtitle">
+                องค์การนักวิชาชีพในอนาคตแห่งประเทศไทย
+                · วิทยาลัยเทคนิคจะนะ
+            </div>
 
         </div>
 
-        <div class="badge">
-          อวท.${getNumber(doc)}/2569
+
+        <div class="stats">
+
+            <div class="stat">
+
+                <div class="stat-label">
+                    จำนวนเอกสารทั้งหมด
+                </div>
+
+                <div class="stat-number">
+                    ${total}
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-label">
+                    เลขทะเบียนล่าสุด
+                </div>
+
+                <div class="stat-number">
+                    ${latest}
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-label">
+                    เลขทะเบียนเริ่มต้น
+                </div>
+
+                <div class="stat-number">
+                    อวท.${START_NUMBER}/2569
+                </div>
+
+            </div>
+
         </div>
 
-      </div>
+
+        <div class="section-head">
+
+            <div class="section-title">
+                หน่วยงาน
+            </div>
+
+            <button
+                class="btn btn-primary"
+                onclick="openAddDocument()"
+            >
+                + ลงทะเบียนเอกสาร
+            </button>
+
+        </div>
 
 
-      <div class="file-list">
+        <div
+            class="org-grid"
+            id="organizationGrid"
+        ></div>
 
-        ${filesHTML}
-
-      </div>
-
-
-      <div class="actions">
-
-        <button
-          class="btn secondary"
-          onclick="editDocument('${doc.id}')">
-
-          ✏️ แก้ไข
-
-        </button>
-
-        <button
-          class="btn danger"
-          onclick="deleteDocument('${doc.id}')">
-
-          🗑️ ลบ
-
-        </button>
-
-      </div>
-
-    </div>
-
-  `;
-
-}
+    `;
 
 
-/* =========================
-   เอกสารทั้งหมด
-========================= */
-
-function showAllDocuments(){
-
-  document.getElementById("search").value="";
-
-  const list=numberedDocuments();
-
-  document.getElementById("content").innerHTML=`
-
-    <div class="breadcrumb">
-      <span onclick="home()">หน้าแรก</span>
-      / เอกสารทั้งหมด
-    </div>
-
-    <div class="toolbar">
-
-      <div>
-
-        <h1 class="page-title">
-          📄 เอกสารทั้งหมด
-        </h1>
-
-        <p class="description">
-          ${list.length} รายการ
-        </p>
-
-      </div>
-
-      <button
-        class="btn primary"
-        onclick="openAddDocument()">
-
-        ＋ ลงทะเบียนเอกสาร
-
-      </button>
-
-    </div>
-
-    <div id="documentList"></div>
-
-  `;
-
-  renderDocumentList(list);
-
-}
+    const grid =
+        document.getElementById(
+            "organizationGrid"
+        );
 
 
-/* =========================
-   ค้นหา
-========================= */
+    organizations.forEach(org=>{
 
-function searchDocuments(){
-
-  const q=
-    document.getElementById("search")
-      .value
-      .toLowerCase()
-      .trim();
+        const count =
+            documents.filter(
+                d=>d.org===org.id
+            ).length;
 
 
-  if(!q){
+        grid.innerHTML += `
 
-    home();
+            <div
+                class="org-card"
+                onclick="openOrganization('${org.id}')"
+            >
 
-    return;
+                <div class="org-icon">
+                    ${org.icon}
+                </div>
 
-  }
+                <div class="org-name">
+                    ${escapeHTML(org.name)}
+                </div>
 
+                <div class="org-count">
+                    ${count} เอกสาร
+                </div>
 
-  const result=
-    numberedDocuments().filter(doc=>{
+            </div>
 
-      const org=
-        organizations.find(o=>o.id===doc.org);
-
-      const text=[
-        documentNumber(doc),
-        doc.type,
-        doc.subject,
-        doc.project,
-        doc.person,
-        org ? org.name : "",
-        isoToThai(doc.isoDate),
-        ...(doc.files||[]).map(f=>f.name)
-      ].join(" ").toLowerCase();
-
-      return text.includes(q);
+        `;
 
     });
 
+}
 
-  document.getElementById("content").innerHTML=`
 
-    <div class="breadcrumb">
-      ผลการค้นหา
-    </div>
+/* =====================================================
+   เปิดหน่วยงาน
+===================================================== */
 
-    <h1 class="page-title">
-      🔍 ผลการค้นหา
-    </h1>
+function openOrganization(id){
 
-    <p class="description">
-      พบ ${result.length} รายการ
-    </p>
+    const org =
+        organizations.find(
+            x=>x.id===id
+        );
 
-    <div id="documentList"></div>
+    if(!org)
+        return;
 
-  `;
 
-  renderDocumentList(result);
+    const projects =
+        [...new Set(
+            documents
+                .filter(d=>d.org===id)
+                .map(d=>d.project)
+        )];
+
+
+    document.getElementById("content").innerHTML=`
+
+        <div class="breadcrumb">
+
+            <span onclick="showHome()">
+                หน้าแรก
+            </span>
+
+            /
+            ${escapeHTML(org.name)}
+
+        </div>
+
+
+        <div class="section-head">
+
+            <div>
+
+                <h1 class="page-title">
+                    ${escapeHTML(org.name)}
+                </h1>
+
+                <div class="page-subtitle">
+                    รายการโครงการและเอกสาร
+                </div>
+
+            </div>
+
+
+            <button
+                class="btn btn-primary"
+                onclick="openAddDocument('${id}')"
+            >
+                + ลงทะเบียนเอกสาร
+            </button>
+
+        </div>
+
+
+        <div id="projectList"></div>
+
+    `;
+
+
+    renderProjects(id,projects);
 
 }
 
 
-/* =========================
+/* =====================================================
+   แสดงโครงการ
+===================================================== */
+
+function renderProjects(orgId,projectNames){
+
+    const box =
+        document.getElementById(
+            "projectList"
+        );
+
+
+    if(projectNames.length===0){
+
+        box.innerHTML=`
+
+            <div class="empty">
+
+                <h3>
+                    ยังไม่มีโครงการ
+                </h3>
+
+                <p>
+                    เมื่อลงทะเบียนเอกสาร
+                    ระบบจะจัดกลุ่มตามโครงการให้อัตโนมัติ
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    projectNames.forEach(projectName=>{
+
+        const docs =
+            numberedDocuments()
+                .filter(
+                    d=>
+                    d.org===orgId &&
+                    d.project===projectName
+                );
+
+
+        box.innerHTML += `
+
+            <div class="project">
+
+                <div class="project-header">
+
+                    <div>
+
+                        <div class="project-name">
+                            📁 ${escapeHTML(projectName)}
+                        </div>
+
+                        <div class="project-date">
+                            ${docs.length}
+                            รายการเอกสาร
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="project-body">
+
+                    ${docs.map(
+                        d=>documentHTML(d)
+                    ).join("")}
+
+                </div>
+
+            </div>
+
+        `;
+
+    });
+
+}
+
+
+/* =====================================================
+   เอกสาร
+===================================================== */
+
+function documentHTML(doc){
+
+    const files =
+        (doc.files||[]).map(
+            file=>`
+
+                <div class="file">
+
+                    <span>📎</span>
+
+                    <span class="file-name">
+                        ${escapeHTML(file.name)}
+                    </span>
+
+                </div>
+
+            `
+        ).join("");
+
+
+    return `
+
+        <div class="document">
+
+            <div class="document-number">
+                ${documentNumber(doc)}
+            </div>
+
+            <div class="document-type">
+                ${escapeHTML(doc.type)}
+            </div>
+
+            <div class="document-subject">
+                ${escapeHTML(doc.subject)}
+            </div>
+
+            <div class="document-meta">
+                วันที่เอกสาร:
+                ${isoToThai(doc.isoDate)}
+            </div>
+
+            ${
+                doc.person
+                ?
+                `
+                <div class="document-meta">
+                    ผู้ลงทะเบียน:
+                    ${escapeHTML(doc.person)}
+                </div>
+                `
+                :
+                ""
+            }
+
+
+            ${
+                files
+                ?
+                `
+                <div class="file-list">
+                    ${files}
+                </div>
+                `
+                :
+                ""
+            }
+
+
+            <div class="document-actions">
+
+                <button
+                    class="btn btn-secondary"
+                    onclick="editDocument('${doc.id}')"
+                >
+                    แก้ไข
+                </button>
+
+                <button
+                    class="btn btn-danger"
+                    onclick="deleteDocument('${doc.id}')"
+                >
+                    ลบ
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   เอกสารทั้งหมด
+===================================================== */
+
+function showAllDocuments(){
+
+    document.getElementById("search").value="";
+
+    const list =
+        numberedDocuments();
+
+
+    document.getElementById("content").innerHTML=`
+
+        <div class="breadcrumb">
+
+            <span onclick="showHome()">
+                หน้าแรก
+            </span>
+
+            /
+            ทะเบียนเอกสาร
+
+        </div>
+
+
+        <div class="section-head">
+
+            <div>
+
+                <h1 class="page-title">
+                    ทะเบียนเอกสาร
+                </h1>
+
+                <div class="page-subtitle">
+                    เรียงตามวันที่เอกสาร
+                    จากเก่าไปใหม่
+                </div>
+
+            </div>
+
+
+            <button
+                class="btn btn-primary"
+                onclick="openAddDocument()"
+            >
+                + ลงทะเบียนเอกสาร
+            </button>
+
+        </div>
+
+
+        <div id="allDocumentList"></div>
+
+    `;
+
+
+    const box =
+        document.getElementById(
+            "allDocumentList"
+        );
+
+
+    if(!list.length){
+
+        box.innerHTML=`
+
+            <div class="empty">
+
+                <h3>
+                    ยังไม่มีเอกสาร
+                </h3>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    list.forEach(doc=>{
+
+        box.innerHTML +=
+            documentHTML(doc);
+
+    });
+
+}
+
+
+/* =====================================================
    เปิดเพิ่มเอกสาร
-========================= */
+===================================================== */
 
 function openAddDocument(orgId=""){
 
-  document.getElementById("modalTitle").textContent=
-    "➕ ลงทะเบียนเอกสาร";
+    editingId=null;
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent=
+        "ลงทะเบียนเอกสาร";
 
 
-  document.getElementById("docDate").value="";
-  document.getElementById("docType").value="";
-  document.getElementById("docOrg").value=orgId;
-  document.getElementById("docProject").value="";
-  document.getElementById("docSubject").value="";
-  document.getElementById("docPerson").value="";
-  document.getElementById("docNote").value="";
-  document.getElementById("docFiles").value="";
+    document.getElementById(
+        "docDate"
+    ).value="";
 
 
-  document.getElementById("modal").style.display="flex";
+    document.getElementById(
+        "docType"
+    ).value="";
+
+
+    document.getElementById(
+        "docOrg"
+    ).value=orgId;
+
+
+    document.getElementById(
+        "docProject"
+    ).value="";
+
+
+    document.getElementById(
+        "docSubject"
+    ).value="";
+
+
+    document.getElementById(
+        "docPerson"
+    ).value="";
+
+
+    document.getElementById(
+        "docNote"
+    ).value="";
+
+
+    document.getElementById(
+        "docFiles"
+    ).value="";
+
+
+    document.getElementById(
+        "saveButton"
+    ).textContent=
+        "บันทึกข้อมูล";
+
+
+    document.getElementById(
+        "modal"
+    ).style.display="flex";
 
 }
 
 
 function closeModal(){
 
-  document.getElementById("modal").style.display="none";
+    document.getElementById(
+        "modal"
+    ).style.display="none";
 
 }
 
 
-/* =========================
-   บันทึกเอกสาร
-========================= */
+/* =====================================================
+   บันทึก
+===================================================== */
 
 function saveDocument(){
 
-  const thaiDate=
-    document.getElementById("docDate").value.trim();
+    const thaiDate =
+        document.getElementById(
+            "docDate"
+        ).value.trim();
 
-  const isoDate=
-    thaiToISO(thaiDate);
 
-  const type=
-    document.getElementById("docType").value;
-
-  const org=
-    document.getElementById("docOrg").value;
-
-  const project=
-    document.getElementById("docProject").value.trim();
-
-  const subject=
-    document.getElementById("docSubject").value.trim();
-
-  const person=
-    document.getElementById("docPerson").value.trim();
-
-  const note=
-    document.getElementById("docNote").value.trim();
-
-
-  if(!isoDate){
-
-    alert(
-      "กรุณากรอกวันที่ให้ถูกต้อง เช่น 29/09/2569"
-    );
-
-    return;
-
-  }
-
-
-  if(!type){
-
-    alert("กรุณาเลือกประเภทบันทึกข้อความ");
-
-    return;
-
-  }
-
-
-  if(!org){
-
-    alert("กรุณาเลือกหน่วยงาน");
-
-    return;
-
-  }
-
-
-  if(!project){
-
-    alert("กรุณากรอกชื่อโครงการ");
-
-    return;
-
-  }
-
-
-  if(!subject){
-
-    alert("กรุณากรอกชื่อเรื่อง");
-
-    return;
-
-  }
-
-
-  const input=
-    document.getElementById("docFiles");
-
-
-  const files=
-    [...input.files].map(file=>({
-
-      name:file.name,
-      size:file.size,
-      type:file.type
-
-    }));
-
-
-  documents.push({
-
-    id:
-      Date.now().toString(),
-
-    seq:
-      Date.now(),
-
-    isoDate:isoDate,
-
-    type:type,
-
-    org:org,
-
-    project:project,
-
-    subject:subject,
-
-    person:person,
-
-    note:note,
-
-    files:files
-
-  });
-
-
-  saveData();
-
-  closeModal();
-
-  showAllDocuments();
-
-}
-
-
-/* =========================
-   แก้ไข
-========================= */
-
-function editDocument(id){
-
-  const doc=
-    documents.find(x=>x.id===id);
-
-  if(!doc)return;
-
-
-  document.getElementById("modalTitle").textContent=
-    "✏️ แก้ไขเอกสาร";
-
-
-  document.getElementById("docDate").value=
-    isoToThai(doc.isoDate);
-
-  document.getElementById("docType").value=
-    doc.type;
-
-  document.getElementById("docOrg").value=
-    doc.org;
-
-  document.getElementById("docProject").value=
-    doc.project;
-
-  document.getElementById("docSubject").value=
-    doc.subject;
-
-  document.getElementById("docPerson").value=
-    doc.person || "";
-
-  document.getElementById("docNote").value=
-    doc.note || "";
-
-  document.getElementById("docFiles").value="";
-
-
-  document.getElementById("modal").style.display="flex";
-
-
-  const btn=
-    document.querySelector(".modal-actions .primary");
-
-  btn.textContent="บันทึกการแก้ไข";
-
-  btn.onclick=function(){
-
-    const thaiDate=
-      document.getElementById("docDate").value.trim();
-
-    const isoDate=
-      thaiToISO(thaiDate);
+    const isoDate =
+        thaiToISO(thaiDate);
 
 
     if(!isoDate){
 
-      alert("กรุณากรอกวันที่ให้ถูกต้อง");
+        alert(
+            "กรุณากรอกวันที่ เช่น 29/09/2569"
+        );
 
-      return;
+        return;
 
     }
 
 
-    doc.isoDate=isoDate;
-
-    doc.type=
-      document.getElementById("docType").value;
-
-    doc.org=
-      document.getElementById("docOrg").value;
-
-    doc.project=
-      document.getElementById("docProject").value.trim();
-
-    doc.subject=
-      document.getElementById("docSubject").value.trim();
-
-    doc.person=
-      document.getElementById("docPerson").value.trim();
-
-    doc.note=
-      document.getElementById("docNote").value.trim();
+    const type =
+        document.getElementById(
+            "docType"
+        ).value;
 
 
-    const newFiles=
-      [...document.getElementById("docFiles").files]
-      .map(file=>({
-        name:file.name,
-        size:file.size,
-        type:file.type
-      }));
+    const org =
+        document.getElementById(
+            "docOrg"
+        ).value;
 
 
-    if(newFiles.length){
+    const project =
+        document.getElementById(
+            "docProject"
+        ).value.trim();
 
-      doc.files=[
-        ...(doc.files||[]),
-        ...newFiles
-      ];
+
+    const subject =
+        document.getElementById(
+            "docSubject"
+        ).value.trim();
+
+
+    const person =
+        document.getElementById(
+            "docPerson"
+        ).value.trim();
+
+
+    const note =
+        document.getElementById(
+            "docNote"
+        ).value.trim();
+
+
+    if(!type){
+
+        alert("กรุณาเลือกประเภทบันทึกข้อความ");
+
+        return;
+
+    }
+
+
+    if(!org){
+
+        alert("กรุณาเลือกหน่วยงาน");
+
+        return;
+
+    }
+
+
+    if(!project){
+
+        alert("กรุณากรอกชื่อโครงการ");
+
+        return;
+
+    }
+
+
+    if(!subject){
+
+        alert("กรุณากรอกชื่อเรื่อง");
+
+        return;
+
+    }
+
+
+    const files =
+        [...document.getElementById(
+            "docFiles"
+        ).files].map(
+            file=>({
+                name:file.name,
+                size:file.size,
+                type:file.type
+            })
+        );
+
+
+    if(editingId){
+
+        const doc =
+            documents.find(
+                x=>x.id===editingId
+            );
+
+
+        if(doc){
+
+            doc.isoDate=isoDate;
+            doc.type=type;
+            doc.org=org;
+            doc.project=project;
+            doc.subject=subject;
+            doc.person=person;
+            doc.note=note;
+
+            if(files.length){
+
+                doc.files =
+                    [
+                        ...(doc.files||[]),
+                        ...files
+                    ];
+
+            }
+
+        }
+
+    }else{
+
+        documents.push({
+
+            id:
+                Date.now().toString(),
+
+            sequence:
+                Date.now(),
+
+            isoDate:isoDate,
+
+            type:type,
+
+            org:org,
+
+            project:project,
+
+            subject:subject,
+
+            person:person,
+
+            note:note,
+
+            files:files
+
+        });
 
     }
 
@@ -1459,58 +1859,248 @@ function editDocument(id){
 
     closeModal();
 
-    btn.textContent="บันทึกเอกสาร";
-
-    btn.onclick=saveDocument;
-
     showAllDocuments();
-
-  };
 
 }
 
 
-/* =========================
+/* =====================================================
+   แก้ไข
+===================================================== */
+
+function editDocument(id){
+
+    const doc =
+        documents.find(
+            x=>x.id===id
+        );
+
+
+    if(!doc)
+        return;
+
+
+    editingId=id;
+
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent=
+        "แก้ไขข้อมูลเอกสาร";
+
+
+    document.getElementById(
+        "docDate"
+    ).value=
+        isoToThai(doc.isoDate);
+
+
+    document.getElementById(
+        "docType"
+    ).value=
+        doc.type;
+
+
+    document.getElementById(
+        "docOrg"
+    ).value=
+        doc.org;
+
+
+    document.getElementById(
+        "docProject"
+    ).value=
+        doc.project;
+
+
+    document.getElementById(
+        "docSubject"
+    ).value=
+        doc.subject;
+
+
+    document.getElementById(
+        "docPerson"
+    ).value=
+        doc.person||"";
+
+
+    document.getElementById(
+        "docNote"
+    ).value=
+        doc.note||"";
+
+
+    document.getElementById(
+        "docFiles"
+    ).value="";
+
+
+    document.getElementById(
+        "saveButton"
+    ).textContent=
+        "บันทึกการแก้ไข";
+
+
+    document.getElementById(
+        "modal"
+    ).style.display="flex";
+
+}
+
+
+/* =====================================================
    ลบ
-========================= */
+===================================================== */
 
 function deleteDocument(id){
 
-  const doc=
-    documents.find(x=>x.id===id);
-
-  if(!doc)return;
-
-
-  const ok=
-    confirm(
-      `ต้องการลบ ${documentNumber(doc)}\n\n${doc.subject}\n\nใช่หรือไม่?`
-    );
+    const doc =
+        documents.find(
+            x=>x.id===id
+        );
 
 
-  if(!ok)return;
+    if(!doc)
+        return;
 
 
-  documents=
-    documents.filter(x=>x.id!==id);
+    const confirmDelete =
+        confirm(
+            "ต้องการลบ "+documentNumber(doc)+
+            "\n"+doc.subject+
+            "\n\nใช่หรือไม่?"
+        );
 
 
-  saveData();
+    if(!confirmDelete)
+        return;
 
-  showAllDocuments();
+
+    documents =
+        documents.filter(
+            x=>x.id!==id
+        );
+
+
+    saveData();
+
+    showAllDocuments();
 
 }
 
 
-/* =========================
+/* =====================================================
+   ค้นหา
+===================================================== */
+
+function searchDocuments(){
+
+    const query =
+        document.getElementById(
+            "search"
+        ).value
+        .toLowerCase()
+        .trim();
+
+
+    if(!query){
+
+        showHome();
+
+        return;
+
+    }
+
+
+    const result =
+        numberedDocuments()
+        .filter(doc=>{
+
+            const org =
+                organizations.find(
+                    x=>x.id===doc.org
+                );
+
+
+            const text = [
+
+                documentNumber(doc),
+
+                doc.type,
+
+                doc.subject,
+
+                doc.project,
+
+                doc.person,
+
+                org ? org.name : "",
+
+                isoToThai(doc.isoDate),
+
+                ...(doc.files||[])
+                    .map(f=>f.name)
+
+            ]
+            .join(" ")
+            .toLowerCase();
+
+
+            return text.includes(query);
+
+        });
+
+
+    document.getElementById(
+        "content"
+    ).innerHTML=`
+
+        <div class="breadcrumb">
+            ผลการค้นหา
+        </div>
+
+        <h1 class="page-title">
+            ผลการค้นหา
+        </h1>
+
+        <div class="page-subtitle">
+            พบ ${result.length} รายการ
+        </div>
+
+        <div
+            style="margin-top:20px"
+            id="searchResult"
+        ></div>
+
+    `;
+
+
+    const box =
+        document.getElementById(
+            "searchResult"
+        );
+
+
+    result.forEach(doc=>{
+
+        box.innerHTML +=
+            documentHTML(doc);
+
+    });
+
+}
+
+
+/* =====================================================
    เริ่มระบบ
-========================= */
+===================================================== */
 
 loadData();
 
-setupSelects();
+setup();
 
-home();
+showHome();
 
 </script>
 
