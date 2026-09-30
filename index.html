@@ -84,6 +84,22 @@ tr:last-child td{border-bottom:0}
 .form-no{font-size:12px;color:#8a6a12;font-weight:800;margin-bottom:5px}
 .form-card .actions{margin-top:auto;padding-top:14px}
 .file-type{font-size:11px;background:#f2f5f9;padding:3px 7px;border-radius:6px;color:#607085;display:inline-block;margin-top:8px}
+.workflow{display:flex;gap:0;overflow-x:auto;padding:12px 4px 18px}
+.step{min-width:170px;position:relative;text-align:center}
+.step:not(:last-child)::after{content:"";position:absolute;top:18px;left:50%;width:100%;height:3px;background:#dbe3ed;z-index:0}
+.step.done:not(:last-child)::after{background:var(--gold)}
+.step-dot{width:36px;height:36px;border-radius:50%;margin:auto;display:flex;align-items:center;justify-content:center;background:#e8edf3;color:#617084;font-weight:800;position:relative;z-index:1;border:3px solid #fff;box-shadow:0 0 0 1px #d5dee8}
+.step.current .step-dot{background:var(--gold);color:#1d1d1d}
+.step.done .step-dot{background:var(--green);color:#fff}
+.step-label{font-size:12px;font-weight:700;color:#637187;margin-top:8px;line-height:1.35}
+.step.current .step-label,.step.done .step-label{color:var(--navy)}
+.status-pill{display:inline-block;padding:5px 9px;border-radius:999px;font-size:12px;font-weight:800;background:#eef3f8;color:var(--navy)}
+.status-wait{background:#fff5d6;color:#8a6500}.status-return{background:#fee9e7;color:var(--red)}.status-done{background:#e5f6ee;color:var(--green)}
+.history{border-left:3px solid #dce5ef;padding-left:15px;margin-top:12px}
+.history-item{padding:0 0 14px;position:relative}
+.history-item::before{content:"";position:absolute;left:-22px;top:3px;width:9px;height:9px;border-radius:50%;background:var(--gold)}
+.history-item b{color:var(--navy)}
+.history-item small{display:block;color:var(--muted);margin-top:3px}
 .note{background:#fff8df;border:1px solid #f0d47b;color:#6e5613;border-radius:10px;padding:12px 14px;font-size:13px;line-height:1.55;margin-bottom:16px}
 .hero{background:linear-gradient(135deg,var(--navy),#245487);color:#fff;border-radius:16px;padding:28px;margin-bottom:20px}
 .hero h1{margin:0 0 7px;font-size:27px}.hero p{margin:0;color:#dce8f6}
@@ -101,6 +117,7 @@ tr:last-child td{border-bottom:0}
   <nav class="nav">
     <button data-page="home" onclick="showHome()">🏠 หน้าแรก</button>
     <button data-page="documents" onclick="showDocuments()">📄 ทะเบียนเอกสาร</button>
+    <button data-page="tracking" onclick="showTracking()">🔄 ติดตามเอกสาร</button>
     <button data-page="organizations" onclick="showOrganizations()">🗂 หน่วยงาน</button>
     <button data-page="structure" onclick="showStructure()">🏛 โครงสร้างองค์กร</button>
     <button data-page="forms" onclick="showForms()">📑 คลังแบบฟอร์ม</button>
@@ -184,6 +201,16 @@ const otherForms=[
 ["แบบฟอร์มอื่น ๆ","แบบฟอร์มสำรวจเอกสารรูปเล่มวิชากิจกรรมองค์การ.doc"]
 ];
 
+const workflowStages=[
+"ชมรม",
+"นายกองค์การนักวิชาชีพฯ",
+"ครูที่ปรึกษาองค์การนักวิชาชีพฯ",
+"หัวหน้างานกิจกรรม",
+"รองผู้อำนวยการฝ่ายกิจการนักเรียน นักศึกษา",
+"ผู้อำนวยการ",
+"เสร็จสิ้น"
+];
+
 let state=JSON.parse(localStorage.getItem(STORAGE_KEY)||"null")||{projects:[],documents:[],people:[],seq:0};
 function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state))}
 function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
@@ -203,7 +230,7 @@ function nextNumber(){
 }
 function renumber(){
   const docs=[...state.documents].sort((a,b)=>(a.date||"").localeCompare(b.date||"")||(a.seq||0)-(b.seq||0));
-  docs.forEach((d,i)=>d.number=String(START_NO+i));
+  docs.forEach((d,i)=>{d.number=String(START_NO+i);ensureWorkflow(d);});
   save();
 }
 function setActive(page){
@@ -212,6 +239,102 @@ function setActive(page){
 function render(html,page){
  document.getElementById("content").innerHTML=html; setActive(page);
  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function ensureWorkflow(d){
+  if(typeof d.stage!=="number") d.stage=0;
+  if(!d.status) d.status="รอดำเนินการ";
+  if(!Array.isArray(d.history)) d.history=[];
+}
+function currentStage(d){
+  ensureWorkflow(d);
+  return workflowStages[Math.max(0,Math.min(d.stage,workflowStages.length-1))];
+}
+function statusClass(status){
+  if(status==="เสร็จสิ้น") return "status-done";
+  if(status==="ตีกลับแก้ไข") return "status-return";
+  return "status-wait";
+}
+function workflowHTML(d){
+  ensureWorkflow(d);
+  return `<div class="workflow">${workflowStages.map((s,i)=>{
+    const cls=i<d.stage?"done":(i===d.stage?"current":"");
+    return `<div class="step ${cls}"><div class="step-dot">${i<d.stage?"✓":i+1}</div><div class="step-label">${esc(s)}</div></div>`;
+  }).join("")}</div>`;
+}
+function workflowSummary(d){
+  ensureWorkflow(d);
+  return `<span class="status-pill ${statusClass(d.status)}">${esc(d.status)}</span> <span class="badge">${esc(currentStage(d))}</span>`;
+}
+function showTracking(){
+  state.documents.forEach(ensureWorkflow);
+  save();
+  const rows=[...state.documents].sort((a,b)=>{
+    if(a.stage!==b.stage) return a.stage-b.stage;
+    return (a.date||"").localeCompare(b.date||"")||(a.seq||0)-(b.seq||0);
+  });
+  render(`<div class="page-title"><div><h1>🔄 ติดตามเอกสาร</h1><p>ตรวจสอบว่าเอกสารแต่ละฉบับอยู่ในขั้นตอนใดของการอนุมัติ</p></div></div>
+  <div class="section">
+    <div class="note">ลำดับการดำเนินงาน: <b>${workflowStages.map(esc).join(" → ")}</b><br>เวอร์ชันนี้เป็นต้นแบบในเบราว์เซอร์เดียว การกำหนดสิทธิ์ตามบทบาทจริงจะทำเมื่อเชื่อมระบบสมาชิก/ฐานข้อมูล</div>
+    ${rows.length?`<div class="table-wrap"><table><tr><th>เลขทะเบียน</th><th>เอกสาร</th><th>โครงการ</th><th>สถานะปัจจุบัน</th><th>ดำเนินการ</th></tr>${rows.map(d=>`<tr>
+      <td><b>อวท.${esc(d.number)}/2569</b><br><small>${thaiDate(d.date)}</small></td>
+      <td>${esc(d.type)}</td><td>${esc(projectName(d.projectId))}</td>
+      <td>${workflowSummary(d)}</td>
+      <td><button class="btn btn-primary btn-sm" onclick="openWorkflow('${d.id}')">ดูรายละเอียด / ดำเนินการ</button></td>
+    </tr>`).join("")}</table></div>`:`<div class="empty">ยังไม่มีเอกสารให้ติดตาม</div>`}
+  </div>`,"tracking");
+}
+function openWorkflow(id){
+  const d=state.documents.find(x=>x.id===id); if(!d)return;
+  ensureWorkflow(d); save();
+  document.getElementById("modalTitle").textContent=`ติดตามเอกสาร อวท.${d.number}/2569`;
+  document.getElementById("modalBody").innerHTML=`
+    <div style="margin-bottom:8px"><b>${esc(d.type)}</b></div>
+    <p style="margin:5px 0;color:var(--muted)">โครงการ: ${esc(projectName(d.projectId))} · วันที่: ${thaiDate(d.date)}</p>
+    ${workflowHTML(d)}
+    <div class="section" style="box-shadow:none;margin:5px 0 15px;padding:14px;background:#f8fafc">
+      <b>สถานะปัจจุบัน:</b> ${workflowSummary(d)}
+    </div>
+    <div class="history">${d.history.length?d.history.slice().reverse().map(h=>`<div class="history-item"><b>${esc(h.action)}</b><small>${esc(h.stage||"")} · ${esc(h.date||"")}${h.reason?`<br>เหตุผล: ${esc(h.reason)}`:""}</small></div>`).join(""):`<div class="history-item"><b>เริ่มส่งเอกสาร</b><small>ยังไม่มีประวัติการดำเนินงาน</small></div>`}</div>
+    <div class="form-actions">
+      ${d.stage>0 && d.stage<workflowStages.length-1?`<button class="btn btn-danger" onclick="returnWorkflow('${d.id}')">↩ ตีกลับแก้ไข</button>`:""}
+      ${d.stage<workflowStages.length-1?`<button class="btn btn-primary" onclick="advanceWorkflow('${d.id}')">✓ รับเรื่อง / ส่งต่อ</button>`:""}
+      ${d.status==="ตีกลับแก้ไข"?`<button class="btn btn-gold" onclick="resubmitWorkflow('${d.id}')">↻ ส่งกลับเข้ากระบวนการ</button>`:""}
+      <button class="btn btn-light" onclick="closeModal()">ปิด</button>
+    </div>`;
+  openModal();
+}
+function addHistory(d,action,stage,reason=""){
+  if(!Array.isArray(d.history))d.history=[];
+  d.history.push({action,stage,date:new Date().toLocaleString("th-TH"),reason});
+}
+function advanceWorkflow(id){
+  const d=state.documents.find(x=>x.id===id);if(!d)return;
+  ensureWorkflow(d);
+  const from=currentStage(d);
+  if(d.stage<workflowStages.length-1){
+    d.stage++;
+    d.status=d.stage===workflowStages.length-1?"เสร็จสิ้น":"รอตรวจสอบ";
+    addHistory(d,d.stage===workflowStages.length-1?"อนุมัติครบถ้วน":"รับเรื่องและส่งต่อ",`${from} → ${currentStage(d)}`);
+    save();openWorkflow(id);
+  }
+}
+function returnWorkflow(id){
+  const d=state.documents.find(x=>x.id===id);if(!d)return;
+  ensureWorkflow(d);
+  const reason=prompt("ระบุเหตุผลที่ตีกลับเพื่อแก้ไข:");
+  if(reason===null)return;
+  if(!reason.trim())return alert("กรุณาระบุเหตุผล");
+  d.status="ตีกลับแก้ไข";
+  addHistory(d,"ตีกลับเพื่อแก้ไข",currentStage(d),reason.trim());
+  save();openWorkflow(id);
+}
+function resubmitWorkflow(id){
+  const d=state.documents.find(x=>x.id===id);if(!d)return;
+  ensureWorkflow(d);
+  d.status="รอตรวจสอบ";
+  addHistory(d,"แก้ไขและส่งกลับเข้ากระบวนการ",currentStage(d));
+  save();openWorkflow(id);
 }
 function showHome(){
  renumber();
@@ -242,7 +365,7 @@ function showDocuments(){
  render(`<div class="page-title"><div><h1>📄 ทะเบียนเอกสาร</h1><p>เลขทะเบียนเรียงตามวันที่เอกสาร และลำดับการบันทึกเมื่อวันเดียวกัน</p></div></div>
  <div class="section"><div class="table-wrap">${rows.length?`<table><tr><th>เลขทะเบียน</th><th>วันที่</th><th>ประเภทเอกสาร</th><th>หน่วยงาน</th><th>โครงการ</th><th>ไฟล์</th><th>จัดการ</th></tr>${rows.map(d=>`<tr>
  <td><b>อวท.${esc(d.number)}/2569</b></td><td>${thaiDate(d.date)}</td><td>${esc(d.type)}</td><td>${esc(d.org)}</td><td>${esc(projectName(d.projectId))}</td>
- <td>${d.fileName?esc(d.fileName):"-"}</td><td><div class="actions"><button class="btn btn-light btn-sm" onclick="editDocument('${d.id}')">แก้ไข</button><button class="btn btn-danger btn-sm" onclick="deleteDocument('${d.id}')">ลบ</button></div></td>
+ <td>${d.fileName?esc(d.fileName):"-"}</td><td><div class="actions"><button class="btn btn-primary btn-sm" onclick="openWorkflow('${d.id}')">ติดตาม</button><button class="btn btn-light btn-sm" onclick="editDocument('${d.id}')">แก้ไข</button><button class="btn btn-danger btn-sm" onclick="deleteDocument('${d.id}')">ลบ</button></div></td>
  </tr>`).join("")}</table>`:`<div class="empty">ยังไม่มีเอกสาร</div>`}</div></div>`,"documents");
 }
 function showOrganizations(){
@@ -311,7 +434,7 @@ function saveDocument(projectId,docId){
  if(docId){
    const d=state.documents.find(x=>x.id===docId);Object.assign(d,{date:iso,type,org:document.getElementById("docOrg").value,fileName:document.getElementById("docFile").value.trim(),note:document.getElementById("docNote").value.trim()});
  }else{
-   state.seq++;state.documents.push({id:crypto.randomUUID(),projectId,org:document.getElementById("docOrg").value,date:iso,type,fileName:document.getElementById("docFile").value.trim(),note:document.getElementById("docNote").value.trim(),seq:state.seq});
+   state.seq++;state.documents.push({id:crypto.randomUUID(),projectId,org:document.getElementById("docOrg").value,date:iso,type,fileName:document.getElementById("docFile").value.trim(),note:document.getElementById("docNote").value.trim(),seq:state.seq,stage:0,status:"รอดำเนินการ",history:[{action:"สร้างรายการเอกสาร",stage:"ชมรม",date:new Date().toLocaleString("th-TH"),reason:""}]});
  }
  renumber();save();closeModal();showProject(projectId);
 }
